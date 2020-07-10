@@ -25,15 +25,12 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 //Routes
-app.use("/api/user", userRoutes);
-app.use("/api/product", productRoutes);
-app.use("/api/order", orderRoutes);
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname + "/client/build/index.html"));
-// });
+app.use("/user", userRoutes);
+app.use("/product", productRoutes);
+app.use("/order", orderRoutes);
 
 //Catch 404 error
 app.use((req, res, next) => {
@@ -53,7 +50,9 @@ app.use((error, req, res, next) => {
     },
   });
 });
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 //Start server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
